@@ -3,12 +3,10 @@ package com.example.trades;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TradesController {
@@ -26,5 +24,12 @@ public class TradesController {
     public ResponseEntity<List<Trade>> getTrades() {
         List<Trade> trades = tradesRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(trades);
+    }
+
+    @GetMapping("/trades/{tradeId}")
+    public ResponseEntity getTradeById(@PathVariable Long tradeId) {
+        Optional<Trade> trade = tradesRepository.findById(tradeId);
+        if (!trade.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.OK).body(trade);
     }
 }
