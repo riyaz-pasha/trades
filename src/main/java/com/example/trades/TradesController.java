@@ -23,7 +23,8 @@ public class TradesController {
     }
 
     @GetMapping("/trades")
-    public List<Trade> getTrades() {
-        return tradesRepository.findAll();
+    public ResponseEntity<List<Trade>> getTrades() {
+        List<Trade> trades = tradesRepository.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(trades);
     }
 }
