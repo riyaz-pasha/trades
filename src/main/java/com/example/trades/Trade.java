@@ -1,5 +1,6 @@
 package com.example.trades;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -19,7 +20,9 @@ public class Trade {
 
     @Pattern(regexp = "buy|sell")
     private String type;
-    private Long user_id;
+
+    @JsonProperty("user_id")
+    private Long userId;
     private String symbol;
 
     @NotNull
@@ -33,10 +36,10 @@ public class Trade {
     private Trade() {
     }
 
-    public Trade(Long id, String type, Long user_id, String symbol, int shares, Long price, LocalDate timestamp) {
+    public Trade(Long id, String type, Long userId, String symbol, int shares, Long price, LocalDate timestamp) {
         this.id = id;
         this.type = type;
-        this.user_id = user_id;
+        this.userId = userId;
         this.symbol = symbol;
         this.shares = shares;
         this.price = price;
@@ -59,12 +62,12 @@ public class Trade {
         this.type = type;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getSymbol() {
@@ -104,7 +107,7 @@ public class Trade {
         return "Trade{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
-                ", user_id=" + user_id +
+                ", user_id=" + userId +
                 ", symbol='" + symbol + '\'' +
                 ", shares=" + shares +
                 ", price=" + price +
