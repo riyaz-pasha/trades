@@ -3,6 +3,10 @@ package com.example.trades;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Entity
@@ -12,10 +16,16 @@ public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Pattern(regexp = "buy|sell")
     private String type;
     private Long user_id;
     private String symbol;
-    private Integer shares;
+
+    @NotNull
+    @Min(value = 1, message = "You should buy at least one share")
+    @Max(value = 100, message = "You can not buy more than 100 shares")
+    private int shares;
     private Long price;
     @CreationTimestamp
     private LocalDate timestamp;
@@ -23,7 +33,7 @@ public class Trade {
     private Trade() {
     }
 
-    public Trade(Long id, String type, Long user_id, String symbol, Integer shares, Long price, LocalDate timestamp) {
+    public Trade(Long id, String type, Long user_id, String symbol, int shares, Long price, LocalDate timestamp) {
         this.id = id;
         this.type = type;
         this.user_id = user_id;
