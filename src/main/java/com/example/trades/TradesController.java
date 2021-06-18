@@ -36,4 +36,11 @@ public class TradesController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(trades);
     }
+
+    @GetMapping("/trades/{tradeId}")
+    public ResponseEntity getTradeById(@PathVariable Long tradeId) {
+        Optional<Trade> trade = tradesRepository.findById(tradeId);
+        if (!trade.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.OK).body(trade);
+    }
 }
